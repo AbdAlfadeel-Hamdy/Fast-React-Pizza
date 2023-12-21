@@ -1,14 +1,8 @@
 import { formatCurrency } from '../../utils/helpers';
+import { Pizza } from '../../utils/types';
 
 type MenuItemProps = {
-  pizza: {
-    id: string;
-    name: string;
-    unitPrice: number;
-    ingredients: string[];
-    soldOut: boolean;
-    imageUrl: string;
-  };
+  pizza: Pizza;
 };
 
 const MenuItem = ({ pizza }: MenuItemProps) => {
