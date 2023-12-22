@@ -21,7 +21,7 @@ export async function getOrder(id: string) {
 
 export async function createOrder(newOrder: CreatedOrder) {
   try {
-    const res = await fetch(`${API_URL}/order`, {
+    const res = await fetch(`${API_URL}/orjder`, {
       method: 'POST',
       body: JSON.stringify(newOrder),
       headers: {
