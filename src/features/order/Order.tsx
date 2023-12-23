@@ -1,11 +1,11 @@
-import { LoaderFunction, useLoaderData } from 'react-router-dom';
-import { getOrder } from '../../services/apiRestaurant';
+import { LoaderFunction, useLoaderData } from "react-router-dom";
+import { getOrder } from "../../services/apiRestaurant";
 import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
-} from '../../utils/helpers';
-import { OrderType } from '../../utils/types';
+} from "../../utils/helpers";
+import { OrderType } from "../../utils/types";
 
 const Order = () => {
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
@@ -35,7 +35,7 @@ const Order = () => {
         <p>
           {deliveryIn >= 0
             ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
-            : 'Order should have arrived'}
+            : "Order should have arrived"}
         </p>
         <p>(Estimated delivery: {formatDate(estimatedDelivery)})</p>
       </div>
