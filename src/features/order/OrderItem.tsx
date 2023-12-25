@@ -1,11 +1,8 @@
-import { formatCurrency } from '../../utils/helpers';
+import { formatCurrency } from "../../utils/helpers";
+import { CartPizza } from "../../utils/types";
 
 type OrderItemProps = {
-  item: {
-    quantity: number;
-    name: string;
-    totalPrice: number;
-  };
+  item: CartPizza;
   isLoadingIngredients: boolean;
   ingredients: [];
 };
@@ -20,12 +17,12 @@ const OrderItem = ({
   console.log(isLoadingIngredients, ingredients);
 
   return (
-    <li>
-      <div>
+    <li className="py-3">
+      <div className="flex items-center justify-between gap-4 text-sm">
         <p>
-          <span>{quantity}&times;</span> {name}
+          <span className="font-bold">{quantity}&times;</span> {name}
         </p>
-        <p>{formatCurrency(totalPrice)}</p>
+        <p className="font-bold">{formatCurrency(totalPrice)}</p>
       </div>
     </li>
   );
