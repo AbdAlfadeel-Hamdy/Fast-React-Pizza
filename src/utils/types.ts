@@ -7,7 +7,7 @@ export type Pizza = {
   soldOut: boolean;
 };
 
-type CartPizza = {
+export type CartPizza = {
   pizzaId: number;
   name: string;
   quantity: number;
