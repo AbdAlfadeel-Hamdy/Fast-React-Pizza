@@ -5,10 +5,11 @@ import {
   useActionData,
   useNavigation,
 } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { createOrder } from "../../services/apiRestaurant";
-import { CreatedOrder, OrderType } from "../../utils/types";
+import { getUsername } from "../user/userSlice";
 import Button from "../../ui/Button";
-import { useAppSelector } from "../../hooks";
+import { CreatedOrder, OrderType } from "../../utils/types";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string) =>
@@ -41,7 +42,7 @@ const fakeCart = [
 ];
 
 const CreateOrder = () => {
-  const username = useAppSelector((state) => state.user.username);
+  const username = useSelector(getUsername);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 

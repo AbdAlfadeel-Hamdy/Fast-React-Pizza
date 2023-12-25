@@ -1,7 +1,8 @@
-import { useAppSelector } from "../../hooks";
+import { useSelector } from "react-redux";
+import { getUsername } from "./userSlice";
 
 const Username = () => {
-  const username = useAppSelector((state) => state.user.username);
+  const username = useSelector(getUsername);
   if (!username) return null;
   return <p className="hidden text-sm font-semibold md:block">{username}</p>;
 };

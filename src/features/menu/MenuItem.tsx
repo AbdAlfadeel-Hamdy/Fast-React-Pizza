@@ -1,4 +1,4 @@
-import { useAppDispatch } from "../../hooks";
+import { useDispatch } from "react-redux";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 import { Pizza } from "../../utils/types";
@@ -10,7 +10,7 @@ type MenuItemProps = {
 
 const MenuItem = ({ pizza }: MenuItemProps) => {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   const handleAddToCart = () => {
     const newItem = {
