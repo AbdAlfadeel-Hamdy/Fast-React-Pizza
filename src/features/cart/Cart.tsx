@@ -1,37 +1,11 @@
 import CartItem from "./CartItem";
 import LinkButton from "../../ui/LinkButton";
 import Button from "../../ui/Button";
-import { CartPizza } from "../../utils/types";
 import { useAppSelector } from "../../hooks";
-
-const fakeCart = [
-  {
-    pizzaId: 12,
-    name: "Mediterranean",
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: "Vegetale",
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: "Spinach and Mushroom",
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
 
 const Cart = () => {
   const username = useAppSelector((state) => state.user.username);
-  const cart: CartPizza[] = fakeCart;
-  console.log(cart);
+  const cart = useAppSelector((state) => state.cart.cart);
 
   return (
     <div className="px-4 py-3">

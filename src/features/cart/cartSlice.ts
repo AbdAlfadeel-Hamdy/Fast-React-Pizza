@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CartPizza } from "../../utils/types";
+import { RootState } from "../../store";
 
 // Initial State
 const initialState = {
@@ -18,6 +19,10 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action: AddItemAction) {
+      const item = state.cart.find(
+        (pizza) => pizza.pizzaId === action.payload.pizzaId,
+      );
+      if (item) return;
       state.cart.push(action.payload);
     },
     deleteItem(state, action: UpdateCartAction) {
@@ -49,7 +54,7 @@ const cartSlice = createSlice({
     },
   },
 });
-
+// Action Creators
 export const {
   addItem,
   deleteItem,
@@ -59,3 +64,9 @@ export const {
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+export const getTotalCartQuantity = (state: RootState) =>
+  state.cart.cart.reduce((sum, item) => sum + item.quantity, 0);
+
+export const getTotalCartPrice = (state: RootState) =>
+  state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);

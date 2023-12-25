@@ -4,10 +4,17 @@ type ButtonProps = {
   children: React.ReactNode;
   disabled?: boolean;
   to?: string;
+  onClick?: () => void;
   type: "primary" | "small" | "secondary";
 };
 
-const Button = ({ children, disabled, to, type = "primary" }: ButtonProps) => {
+const Button = ({
+  children,
+  disabled,
+  to,
+  type = "primary",
+  onClick,
+}: ButtonProps) => {
   const base =
     "inline-block text-sm rounded-full bg-yellow-400 font-semibold uppercase tracking-wide text-stone-800 outline-none transition-colors duration-300 hover:bg-yellow-300 focus:bg-yellow-300 focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed";
 
@@ -26,7 +33,7 @@ const Button = ({ children, disabled, to, type = "primary" }: ButtonProps) => {
     );
 
   return (
-    <button disabled={disabled} className={styles[type]}>
+    <button onClick={onClick} disabled={disabled} className={styles[type]}>
       {children}
     </button>
   );
