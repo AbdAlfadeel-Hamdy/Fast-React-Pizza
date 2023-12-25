@@ -4,6 +4,8 @@
 //   });
 // };
 
+import { createSlice } from "@reduxjs/toolkit";
+
 // const fetchAddress = async () => {
 //   // 1) We get the user's geolocation position
 //   const positionObj = await getPosition();
@@ -19,3 +21,25 @@
 //   // 3) Then we return an object with the data that we are interested in
 //   return { position, address };
 // };
+
+const initialState = {
+  username: "",
+};
+
+type UpdateNameAction = {
+  payload: string;
+};
+
+const userSlice = createSlice({
+  name: "user",
+  initialState,
+  reducers: {
+    updateName(state, action: UpdateNameAction) {
+      state.username = action.payload;
+    },
+  },
+});
+
+export const { updateName } = userSlice.actions;
+
+export default userSlice.reducer;
