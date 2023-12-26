@@ -10,7 +10,6 @@ import { OrderType } from "../../utils/types";
 
 const Order = () => {
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
-  const order = useLoaderData() as OrderType;
   const {
     id,
     status,
@@ -19,10 +18,9 @@ const Order = () => {
     orderPrice,
     estimatedDelivery,
     cart,
-  } = order;
-  const deliveryIn = calcMinutesLeft(estimatedDelivery);
+  } = useLoaderData() as OrderType;
 
-  console.log(id, cart);
+  const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
     <div className="space-y-8 px-4 py-6">
