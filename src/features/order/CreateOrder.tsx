@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   ActionFunction,
   Form,
@@ -6,14 +7,13 @@ import {
   useNavigation,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import store, { AppDispatch } from "../../store";
 import Button from "../../ui/Button";
+import store, { AppDispatch } from "../../store";
 import { fetchAddress, getUser } from "../user/userSlice";
 import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
 import { createOrder } from "../../services/apiRestaurant";
 import { isValidPhone, formatCurrency } from "../../utils/helpers";
 import { CreatedOrder, OrderType } from "../../utils/types";
-import { useState } from "react";
 
 const CreateOrder = () => {
   const {

@@ -4,7 +4,7 @@ import { CartPizza } from "../../utils/types";
 type OrderItemProps = {
   item: CartPizza;
   isLoadingIngredients: boolean;
-  ingredients: [];
+  ingredients: string[] | undefined;
 };
 
 const OrderItem = ({
@@ -13,7 +13,7 @@ const OrderItem = ({
   ingredients,
 }: OrderItemProps) => {
   const { quantity, name, totalPrice } = item;
-  console.log(isLoadingIngredients, ingredients);
+  console.log(ingredients);
 
   return (
     <li className="py-3">
@@ -23,6 +23,9 @@ const OrderItem = ({
         </p>
         <p className="font-bold">{formatCurrency(totalPrice)}</p>
       </div>
+      <p className="text-sm capitalize italic text-stone-500">
+        {isLoadingIngredients ? "Loading..." : ingredients?.join(", ")}
+      </p>
     </li>
   );
 };
