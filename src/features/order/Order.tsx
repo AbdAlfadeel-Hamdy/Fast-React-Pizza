@@ -78,6 +78,7 @@ const Order = () => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const loader: LoaderFunction = async ({ params }) => {
   const { orderId } = params;
   if (!orderId) return;

@@ -5,10 +5,10 @@ import {
   useActionData,
   useNavigation,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
-import store from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import store, { AppDispatch } from "../../store";
 import Button from "../../ui/Button";
-import { getUsername } from "../user/userSlice";
+import { fetchAddress, getUser } from "../user/userSlice";
 import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
 import { createOrder } from "../../services/apiRestaurant";
 import { isValidPhone, formatCurrency } from "../../utils/helpers";
@@ -16,7 +16,15 @@ import { CreatedOrder, OrderType } from "../../utils/types";
 import { useState } from "react";
 
 const CreateOrder = () => {
-  const username = useSelector(getUsername);
+  const {
+    username,
+    status: addressStatus,
+    error: addressError,
+    address,
+    position,
+  } = useSelector(getUser);
+  const isLoadingAddress = addressStatus === "loading";
+  const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
@@ -56,7 +64,7 @@ const CreateOrder = () => {
           </div>
         </div>
 
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div className="relative mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label className="sm:basis-40">Address</label>
           <div className="grow">
             <input
@@ -64,8 +72,26 @@ const CreateOrder = () => {
               type="text"
               name="address"
               required
+              disabled={isLoadingAddress}
+              defaultValue={address}
             />
+            {addressStatus === "error" && (
+              <p className="mt-2 rounded-md bg-red-100 p-2 text-xs text-red-700">
+                {addressError}
+              </p>
+            )}
           </div>
+          {!position?.latitude && !position?.longitude && (
+            <span className="absolute right-[3px] top-[3px] z-10 md:right-[5px] md:top-[5px]">
+              <Button
+                type="small"
+                onClick={() => dispatch(fetchAddress())}
+                disabled={isLoadingAddress}
+              >
+                Get position
+              </Button>
+            </span>
+          )}
         </div>
 
         <div className="mb-12 flex items-center gap-5">
@@ -82,7 +108,16 @@ const CreateOrder = () => {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <Button type="primary" disabled={isSubmitting}>
+          <input
+            type="hidden"
+            name="position"
+            value={
+              position?.latitude && position.longitude
+                ? `${position.latitude},${position.longitude}`
+                : ""
+            }
+          />
+          <Button type="primary" disabled={isSubmitting || isLoadingAddress}>
             {isSubmitting ? "Placing order..." : `Order now from ${totalPrice}`}
           </Button>
         </div>
@@ -91,11 +126,10 @@ const CreateOrder = () => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-
-  console.log(data);
 
   const order = {
     ...data,

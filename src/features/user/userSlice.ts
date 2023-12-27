@@ -4,7 +4,7 @@ import { getAddress } from "../../services/apiGeocoding";
 import { getPosition } from "../../utils/helpers";
 
 // Fetch Address Thunk
-const fetchAddress = createAsyncThunk("user/fetchAddress", async () => {
+export const fetchAddress = createAsyncThunk("user/fetchAddress", async () => {
   // 1) Get the user's geolocation position
   const positionObj = await getPosition();
   const position = {
@@ -21,7 +21,7 @@ const fetchAddress = createAsyncThunk("user/fetchAddress", async () => {
 type User = {
   username: string;
   status: "idle" | "loading" | "error";
-  address: string | null;
+  address: string | undefined;
   position: {
     latitude: number;
     longitude: number;
@@ -32,7 +32,7 @@ type User = {
 const initialState: User = {
   username: "",
   status: "idle",
-  address: null,
+  address: undefined,
   position: null,
   error: undefined,
 };
@@ -60,8 +60,10 @@ const userSlice = createSlice({
         state.address = action.payload.address;
         state.status = "idle";
       })
-      .addCase(fetchAddress.rejected, (state, action) => {
-        state.error = action.error.message;
+      .addCase(fetchAddress.rejected, (state) => {
+        state.status = "error";
+        state.error =
+          "There was a problem getting your address. Make sure to fill this field!";
       });
   },
 });
@@ -69,5 +71,7 @@ const userSlice = createSlice({
 export const { updateName } = userSlice.actions;
 
 export default userSlice.reducer;
+
+export const getUser = (state: RootState) => state.user;
 
 export const getUsername = (state: RootState) => state.user.username;
