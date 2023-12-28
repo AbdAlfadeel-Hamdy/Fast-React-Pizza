@@ -13,7 +13,6 @@ const OrderItem = ({
   ingredients,
 }: OrderItemProps) => {
   const { quantity, name, totalPrice } = item;
-  console.log(ingredients);
 
   return (
     <li className="py-3">

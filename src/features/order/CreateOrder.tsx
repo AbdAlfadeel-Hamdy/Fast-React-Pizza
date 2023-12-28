@@ -7,6 +7,7 @@ import {
   useNavigation,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import EmptyCart from "../cart/EmptyCart";
 import Button from "../../ui/Button";
 import store, { AppDispatch } from "../../store";
 import { fetchAddress, getUser } from "../user/userSlice";
@@ -23,6 +24,7 @@ const CreateOrder = () => {
     address,
     position,
   } = useSelector(getUser);
+
   const isLoadingAddress = addressStatus === "loading";
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation();
@@ -35,6 +37,8 @@ const CreateOrder = () => {
   const [withPriority, setWithPriority] = useState(false);
   const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
   const totalPrice = formatCurrency(totalCartPrice + priorityPrice);
+
+  if (!cart.length) return <EmptyCart />;
 
   return (
     <div className="px-4 py-6">
